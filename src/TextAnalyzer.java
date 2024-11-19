@@ -1,5 +1,4 @@
 import java.io.File;
-import java.util.Set;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +45,8 @@ public class TextAnalyzer {
         ArrayList<Passage> passages = new ArrayList<>();
         for (File file : textFiles) {
             try {
-                passages.add(new Passage(file.getName().replaceFirst("[.][^.]+$", ""), file));
+                passages.add(new Passage(file.getName()
+                  .replaceFirst("[.][^.]+$", ""), file)); //Removes the extension of a file.
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -64,7 +64,8 @@ public class TextAnalyzer {
      */
     private static void printSimilarity(ArrayList<Passage> passages) {
         System.out.printf("%-30s | %s%n", "Text (title)", "Similarities (%)");
-        Collections.sort(passages, (p1, p2) -> p1.getTitle().compareToIgnoreCase(p2.getTitle()));
+        Collections.sort(passages,
+          (p1, p2) -> p1.getTitle().compareToIgnoreCase(p2.getTitle()));
         ArrayList<String> suspectedAuthors = new ArrayList<>();
 
         for (Passage p1 : passages) {
@@ -72,13 +73,16 @@ public class TextAnalyzer {
             for (Passage p2 : passages) {
                 if (!p1.equals(p2)) {
                     double similarity = Passage.cosineSimilarity(p1, p2) * 100;
-                    similarities.add(p2.getTitle() + "(" + String.format("%.0f%%", similarity) + ")");
+                    similarities.add(p2.getTitle() +
+                      "(" + String.format("%.0f%%", similarity) + ")");
                 }
             }
             System.out.println("--------------------------------------------------------------------------------");
             System.out.printf("%-30s |", p1.getTitle());
-            System.out.println(similarities.get(0) + ", " + similarities.get(1) + ", ");
-            System.out.printf("%-30s | %s%n", "", similarities.get(2) + ", " + similarities.get(3));
+            System.out.println(similarities.get(0)
+              + ", " + similarities.get(1) + ", ");
+            System.out.printf("%-30s | %s%n", "", similarities.get(2)
+              + ", " + similarities.get(3));
         }
     }
 
@@ -87,16 +91,20 @@ public class TextAnalyzer {
      * @param passages Passages to check.
      * @param threshold Threshold of similarity.
      */
-    private static void similarAuthor(ArrayList<Passage> passages, double threshold){
+    private static void similarAuthor(ArrayList<Passage> passages,
+      double threshold){
         System.out.println("Suspected Texts With Same Authors\n" +
                 "--------------------------------------------------------------------------------");
         for(int i = 0; i < passages.size(); i++){
             for(int j = i + 1; j < passages.size(); j++){
                 Passage p1 = passages.get(i);
                 Passage p2 = passages.get(j);
-                int similarity = (int) Math.round(Passage.cosineSimilarity(p1, p2) * 100);
+                int similarity =
+                  (int) Math.round(Passage.cosineSimilarity(p1, p2) * 100);
                 if(similarity>= threshold* 100){
-                    System.out.println("'" + p1.getTitle() + "' and '" + p2.getTitle() + "' may have the same author (" + similarity + "% similar).");
+                    System.out.println("'" + p1.getTitle() + "' and '"
+                      + p2.getTitle() + "' may have the same author ("
+                      + similarity + "% similar).");
                 }
             }
         }

@@ -62,7 +62,8 @@ public class Passage {
                     wordCount++;
                     if (word.isEmpty() || stopWords.contains(word))
                         continue;
-                    wordFrequencies.put(word, wordFrequencies.getOrDefault(word, 0) + 1);
+                    wordFrequencies.put(word,
+                      wordFrequencies.getOrDefault(word, 0) + 1);
                 }
             }
         }
@@ -171,7 +172,8 @@ public class Passage {
      */
     public String toString(){
         StringBuilder res = new StringBuilder();
-        res.append(title + "\n Word Count:" + wordCount + "\n Similar Titles:" + similarTitles.toString() + "\n");
+        res.append(title + "\n Word Count:" + wordCount + "\n Similar Titles:"
+          + similarTitles.toString() + "\n");
         return res.toString();
     }
 
