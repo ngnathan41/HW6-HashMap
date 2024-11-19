@@ -3,9 +3,14 @@ import java.util.Set;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
+/** The TextAnalyzer class analyzes texts in a given directory and determines if they may have the same author based on a given word similarity percentage.
+ * @author Nathan Ng
+ *  email: nathan.ng@stonybrook.edu
+ *  ID: 116188023
+ *  Recitation: 4
+ */
 public class TextAnalyzer {
     private static FrequencyTable frequencyTable;
-    public Set<String> stopWords;
     private static Scanner sc;
 
     public static void main(String[] args) {
@@ -48,12 +53,16 @@ public class TextAnalyzer {
         }
 
         frequencyTable = FrequencyTable.buildTable(passages);
-        printSimilarity(passages, similarity);
+        printSimilarity(passages);
         similarAuthor(passages, similarity);
 
     }
 
-    private static void printSimilarity(ArrayList<Passage> passages, double threshold) {
+    /**Prints the similarity table for each Passage.
+     *
+     * @param passages Passages to print similarity tables for.
+     */
+    private static void printSimilarity(ArrayList<Passage> passages) {
         System.out.printf("%-30s | %s%n", "Text (title)", "Similarities (%)");
         Collections.sort(passages, (p1, p2) -> p1.getTitle().compareToIgnoreCase(p2.getTitle()));
         ArrayList<String> suspectedAuthors = new ArrayList<>();
@@ -73,6 +82,11 @@ public class TextAnalyzer {
         }
     }
 
+    /**Checks passages to see if they may have the same author based on the given similarity threshold.
+     *
+     * @param passages Passages to check.
+     * @param threshold Threshold of similarity.
+     */
     private static void similarAuthor(ArrayList<Passage> passages, double threshold){
         System.out.println("Suspected Texts With Same Authors\n" +
                 "--------------------------------------------------------------------------------");
